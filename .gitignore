@@ -40,3 +40,7 @@ out/
 ### Grafana ###
 ./data/grafana
 ./data/grafana/**
+
+# Logs
+logs/
+*.log
