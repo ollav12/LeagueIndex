@@ -94,11 +94,11 @@ This repo is a monolithic repository containing both backend and frontend code.
 - [x] 📉 Monitoring Dashboards & Alerts - Grafana
 - [x] 🐳 Dockerized services - PostgreSQL, Redis, Prometheus, Grafana
 - [x] 🥷 API documentation - Swagger / OpenAPI
+- [x] 📝 Logging - Slf4j, Logback
 - [ ] 🌍 Rate limiting -
 - [ ] 🌍 Load Balancer -
 - [ ] ☸️ Deployment - Kubernetes
 - [ ] 🔐 Authentication & authorization -
-- [ ] 📝 Logging - Slf4j, Logback, Grafana Loki (Exporting logs to Grafana)
 - [ ] 🧪 Testing - Unit tests, Integration tests
 - [ ] 🔄 CI/CD pipeline - build, test, deploy automation
 - [ ] 🛡️ Security hardening - HTTPS, headers, secrets management
