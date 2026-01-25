@@ -95,7 +95,7 @@ This repo is a monolithic repository containing both backend and frontend code.
 - [x] 🐳 Dockerized services - PostgreSQL, Redis, Prometheus, Grafana
 - [x] 🥷 API documentation - Swagger / OpenAPI
 - [x] 📝 Logging - Slf4j, Logback
-- [ ] 🌍 Rate limiting -
+- [x] 🌍 Rate limiting - Rate limiting by IP using redis
 - [ ] 🌍 Load Balancer -
 - [ ] ☸️ Deployment - Kubernetes
 - [ ] 🔐 Authentication & authorization -
