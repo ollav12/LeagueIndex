@@ -49,6 +49,11 @@ spring:
       password: your-prod-password
       timeout: 2000
       connect-timeout: 2000
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
 logging:
   level:
     "[org.springframework]": INFO
@@ -85,6 +90,19 @@ spring:
     redis:
       time-to-live: 86400000 # 24 hours in milliseconds
       cache-null-values: false
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  info:
+    title: LeagueTracker API
+    description: API documentation for LeagueTracker backend
+    version: 1.0.0
+
 
 ---
 spring:

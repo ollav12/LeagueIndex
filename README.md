@@ -69,10 +69,37 @@ Create your `.env` file inside `backend`, the `.env.example` shows how it should
    npm run dev
    ```
 
-## Database access
+## Services running
 
 You can acces postgres using pgAdmin on http://localhost:5050/ with username and password defined in `application.yml`.
 
 Promethues is avaiable at http://localhost:9090/
 
 Grafana is avaiable at http://localhost:3000/ with username `admin` and password `admin`.
+
+## Architecture
+
+This repo is a monolithic repository containing both backend and frontend code.
+
+- Backend follows a layered architecture
+- Frontend follows a component based architecture
+
+## Features and TODOs
+
+- [x] 🧠 Rest API - Spring Boot
+- [x] 🧯 Global exception handling
+- [x] 📦 Database - PostgreSQL
+- [x] ⚡ Caching - Redis
+- [x] 📊 Metrics: Prometheus, Micrometer
+- [x] 📉 Monitoring Dashboards & Alerts - Grafana
+- [x] 🐳 Dockerized services - PostgreSQL, Redis, Prometheus, Grafana
+- [ ] 🌍 Rate limiting -
+- [ ] 🌍 Load Balancer -
+- [ ] ☸️ Deployment - Kubernetes
+- [ ] 🔐 Authentication & authorization -
+- [ ] 🥷 API documentation - Swagger / OpenAPI
+- [ ] 📝 Logging - Slf4j, Logback, Grafana Loki (Exporting logs to Grafana)
+- [ ] 🧪 Testing - Unit tests, Integration tests
+- [ ] 🔄 CI/CD pipeline - build, test, deploy automation
+- [ ] 🛡️ Security hardening - HTTPS, headers, secrets management
+- [ ] ♻️ Configuration management - environment-based config

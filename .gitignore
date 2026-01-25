@@ -39,3 +39,4 @@ out/
 
 ### Grafana ###
 ./data/grafana
+./data/grafana/**
