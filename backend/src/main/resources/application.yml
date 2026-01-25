@@ -3,6 +3,28 @@ spring:
     name: leaguetracker
   profiles:
     active: dev # Default profile, can be overridden
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - prometheus
+
+riot:
+  api-key: ${RIOT_API_KEY}
+logging:
+  level:
+    root: INFO
+    "[org.hibernate.SQL]": OFF
+    "[org.hibernate.type.descriptor.sql.BasicBinder]": WARN
+    # Redis and cache logging
+    "[org.springframework.data.redis]": DEBUG
+    "[org.springframework.cache]": TRACE
+    "[io.lettuce.core]": DEBUG
+    "[com.leaguetracker.app]": DEBUG
+    "[org.springframework.boot.autoconfigure.cache]": DEBUG
+
 ---
 spring:
   config:
@@ -63,19 +85,6 @@ spring:
     redis:
       time-to-live: 86400000 # 24 hours in milliseconds
       cache-null-values: false
-riot:
-  api-key: ${RIOT_API_KEY}
-logging:
-  level:
-    root: INFO
-    "[org.hibernate.SQL]": OFF
-    "[org.hibernate.type.descriptor.sql.BasicBinder]": WARN
-    # Redis and cache logging
-    "[org.springframework.data.redis]": DEBUG
-    "[org.springframework.cache]": TRACE
-    "[io.lettuce.core]": DEBUG
-    "[com.leaguetracker.app]": DEBUG
-    "[org.springframework.boot.autoconfigure.cache]": DEBUG
 
 ---
 spring:
@@ -96,8 +105,3 @@ spring:
       port: 6379
       # Using test containers for Redis in test environment
       timeout: 1000
-
-logging:
-  level:
-    "[org.springframework]": INFO
-    root: INFO

@@ -1,5 +1,6 @@
 package com.leaguetracker.app.service.riot.endpoint;
 
+import com.leaguetracker.app.service.riot.RiotRateLimiter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -17,6 +18,7 @@ public class SummonerEndpoint {
     private final WebClient webClient;
     private final WebClientConfig webClientConfig;
     private final ObjectMapper objectMapper;
+    private final RiotRateLimiter rateLimiter;
 
     public RiotSummonerResponse findByPuuid(String puuid, String region) {
         RiotRequest<RiotSummonerResponse> request = new RiotRequest<>(
@@ -26,6 +28,7 @@ public class SummonerEndpoint {
                 RiotSummonerResponse.class,
                 webClientConfig,
                 webClient,
+                rateLimiter,
                 puuid);
         return request.execute();
     }

@@ -29,6 +29,10 @@ dependencies {
     implementation 'io.lettuce:lettuce-core:6.3.0.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.mapstruct:mapstruct:1.6.3'
+    implementation 'com.bucket4j:bucket4j_jdk17-core:8.15.0'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

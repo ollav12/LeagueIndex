@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 
@@ -63,10 +64,20 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGenericException(
             Exception e,
-            HttpServletRequest request) {
+            HttpServletRequest request) throws Exception {
+
+        String path = request.getRequestURI();
+
+        // Skip actuator endpoints and favicon
+        if (path.startsWith("/actuator/") || path.equals("/actuator") || path.equals("/favicon.ico") || path.equals("/metrics")) {
+            throw e;  // let Spring handle it internally
+        }
+        
+
         log.error("Unexpected error: {}", e.getMessage(), e);
+
         ApiError apiError = new ApiError(
-                request.getRequestURI(),
+                path,
                 "An unexpected error occurred",
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 LocalDateTime.now()
