@@ -69,13 +69,13 @@ Create your `.env` file inside `backend`, the `.env.example` shows how it should
    npm run dev
    ```
 
-## Services running
+## Accessing various services
 
-You can acces postgres using pgAdmin on http://localhost:5050/ with username and password defined in `application.yml`.
-
-Promethues is avaiable at http://localhost:9090/
-
-Grafana is avaiable at http://localhost:3000/ with username `admin` and password `admin`.
+- You can acces postgres using pgAdmin on http://localhost:5050/ with username and password defined in
+  `application.yml`.
+- Promethues is avaiable at http://localhost:9090/
+- Grafana is avaiable at http://localhost:3000/ with username `admin` and password `admin`.
+- Swagger UI is avaiable at http://localhost:8080/swagger-ui.html
 
 ## Architecture
 

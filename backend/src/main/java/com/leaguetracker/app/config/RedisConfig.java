@@ -10,9 +10,11 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.cache.annotation.EnableCaching;
+
 import java.time.Duration;
 
 @Configuration
@@ -63,5 +65,14 @@ public class RedisConfig {
         return RedisCacheManager.builder(connectionFactory)
                 .cacheDefaults(cacheConfig)
                 .build();
+    }
+
+    @Bean
+    public RedisTemplate<String, Integer> rateLimiterRedisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Integer> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new GenericToStringSerializer<>(Integer.class));
+        return template;
     }
 }

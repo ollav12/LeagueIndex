@@ -1,8 +1,11 @@
+# =======================
+# Common/default settings
+# =======================
 spring:
   application:
     name: leaguetracker
   profiles:
-    active: dev # Default profile, can be overridden
+    active: dev  # default, can be overridden
 
 management:
   endpoints:
@@ -13,18 +16,10 @@ management:
 
 riot:
   api-key: ${RIOT_API_KEY}
-logging:
-  level:
-    root: INFO
-    "[org.hibernate.SQL]": OFF
-    "[org.hibernate.type.descriptor.sql.BasicBinder]": WARN
-    # Redis and cache logging
-    "[org.springframework.data.redis]": DEBUG
-    "[org.springframework.cache]": TRACE
-    "[io.lettuce.core]": DEBUG
-    "[com.leaguetracker.app]": DEBUG
-    "[org.springframework.boot.autoconfigure.cache]": DEBUG
 
+# =======================
+# Production profile
+# =======================
 ---
 spring:
   config:
@@ -41,7 +36,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        "[format_sql]": true
+        format_sql: true
   data:
     redis:
       host: redis-prod
@@ -49,16 +44,27 @@ spring:
       password: your-prod-password
       timeout: 2000
       connect-timeout: 2000
+
+# Logging for prod
+logging:
+  level:
+    root: INFO
+    "[org.springframework]": INFO
+    "[org.hibernate.SQL]": WARN
+    "[org.springframework.data.redis]": INFO
+    "[io.lettuce.core]": INFO
+    "[com.leaguetracker.app]": INFO
+
+# Disable Swagger in prod
 springdoc:
   api-docs:
     enabled: false
   swagger-ui:
     enabled: false
-logging:
-  level:
-    "[org.springframework]": INFO
-    root: INFO
 
+# =======================
+# Development profile
+# =======================
 ---
 spring:
   config:
@@ -76,21 +82,32 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        "[format_sql]": true
+        format_sql: true
   data:
     redis:
       host: localhost
       port: 6379
-      # No password for local development
       timeout: 2000
       connect-timeout: 2000
-  # Enable cache debugging
   cache:
     type: redis
     redis:
-      time-to-live: 86400000 # 24 hours in milliseconds
+      time-to-live: 86400000 # 24 hours
       cache-null-values: false
 
+# Logging for dev (verbose)
+logging:
+  level:
+    root: INFO
+    "[org.hibernate.SQL]": OFF
+    "[org.hibernate.type.descriptor.sql.BasicBinder]": WARN
+    "[org.springframework.data.redis]": OFF
+    "[org.springframework.cache]": TRACE
+    "[io.lettuce.core]": OFF
+    "[com.leaguetracker.app]": DEBUG
+    "[org.springframework.boot.autoconfigure.cache]": DEBUG
+
+# Enable Swagger in dev
 springdoc:
   api-docs:
     enabled: true
@@ -99,11 +116,13 @@ springdoc:
     enabled: true
     path: /swagger-ui.html
   info:
-    title: LeagueTracker API
-    description: API documentation for LeagueTracker backend
+    title: LeagueIndex API
+    description: API documentation for LeagueIndex backend
     version: 1.0.0
 
-
+# =======================
+# Test profile
+# =======================
 ---
 spring:
   config:
@@ -121,5 +140,18 @@ spring:
     redis:
       host: localhost
       port: 6379
-      # Using test containers for Redis in test environment
       timeout: 1000
+
+# Logging for test
+logging:
+  level:
+    root: WARN
+    "[org.springframework]": WARN
+    "[com.leaguetracker.app]": DEBUG
+
+# Swagger not needed in tests
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
