@@ -3,15 +3,9 @@ package com.leaguetracker.app.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.leaguetracker.app.config.TestWebClientConfig;
-import com.leaguetracker.app.config.WebClientConfig;
-import com.leaguetracker.app.dto.response.RiotAccountResponse;
-import com.leaguetracker.app.helper.Helper;
-import com.leaguetracker.app.service.riot.RiotRateLimiter;
-import com.leaguetracker.app.service.riot.RiotRequest;
-import com.leaguetracker.app.service.riot.endpoint.RiotEndpoint;
+import com.leaguetracker.app.config.web.WebClientConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;

@@ -1,4 +1,4 @@
-package com.leaguetracker.app.config;
+package com.leaguetracker.app.config.persistence;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,7 @@
-package com.leaguetracker.app.config;
+package com.leaguetracker.app.config.aspect;
 
 import java.util.Arrays;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

@@ -1,12 +1,9 @@
 package com.leaguetracker.app.service.riot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.leaguetracker.app.config.WebClientConfig;
+import com.leaguetracker.app.config.web.WebClientConfig;
 import com.leaguetracker.app.service.riot.endpoint.RiotEndpoint;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Slf4j

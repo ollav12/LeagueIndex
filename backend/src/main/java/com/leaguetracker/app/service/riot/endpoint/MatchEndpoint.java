@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import lombok.RequiredArgsConstructor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.leaguetracker.app.config.WebClientConfig;
+import com.leaguetracker.app.config.web.WebClientConfig;
 import com.leaguetracker.app.dto.response.RiotMatchListResponse;
 import com.leaguetracker.app.dto.response.RiotMatchResponse;
 import com.leaguetracker.app.helper.Helper;

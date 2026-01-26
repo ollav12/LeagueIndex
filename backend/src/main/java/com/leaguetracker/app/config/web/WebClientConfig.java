@@ -1,5 +1,6 @@
-package com.leaguetracker.app.config;
+package com.leaguetracker.app.config.web;
 
+import com.leaguetracker.app.config.env.EnvConfig;
 import com.leaguetracker.app.service.riot.endpoint.RiotEndpoint;
 
 import org.springframework.context.annotation.Bean;
