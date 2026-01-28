@@ -1,11 +1,11 @@
 package com.leaguetracker.app.config;
 
 import com.leaguetracker.app.config.env.EnvConfig;
-import com.leaguetracker.app.config.web.WebClientConfig;
+import com.leaguetracker.app.config.web.HttpClientConfig;
 import com.leaguetracker.app.service.riot.endpoint.RiotEndpoint;
 
-public class TestWebClientConfig extends WebClientConfig {
-    public TestWebClientConfig() {
+public class TestHttpClientConfig extends HttpClientConfig {
+    public TestHttpClientConfig() {
         super(new EnvConfig());
     }
 

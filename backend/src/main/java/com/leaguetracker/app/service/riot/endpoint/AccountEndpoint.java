@@ -2,22 +2,21 @@ package com.leaguetracker.app.service.riot.endpoint;
 
 import com.leaguetracker.app.service.riot.RiotRateLimiter;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-
 import lombok.RequiredArgsConstructor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.leaguetracker.app.config.web.WebClientConfig;
+import com.leaguetracker.app.config.web.HttpClientConfig;
 import com.leaguetracker.app.dto.response.RiotAccountResponse;
 import com.leaguetracker.app.helper.Helper;
 import com.leaguetracker.app.service.riot.RiotRequest;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
 public class AccountEndpoint {
 
-    private final WebClient webClient;
-    private final WebClientConfig webClientConfig;
+    private final RestTemplate restTemplate;
+    private final HttpClientConfig httpClientConfig;
     private final ObjectMapper objectMapper;
     private final RiotRateLimiter rateLimiter;
 
@@ -32,11 +31,12 @@ public class AccountEndpoint {
                 Helper.getRiotApiRegion(region),
                 objectMapper,
                 RiotAccountResponse.class,
-                webClientConfig,
-                webClient,
+                httpClientConfig,
+                restTemplate,
                 rateLimiter,
                 summonerName,
-                tag);
+                tag
+        );
         return request.execute();
     }
 
@@ -46,10 +46,11 @@ public class AccountEndpoint {
                 Helper.getRiotApiRegion(region),
                 objectMapper,
                 RiotAccountResponse.class,
-                webClientConfig,
-                webClient,
+                httpClientConfig,
+                restTemplate,
                 rateLimiter,
-                puuid);
+                puuid
+        );
         return request.execute();
     }
 }

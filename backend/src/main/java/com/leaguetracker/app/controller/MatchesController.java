@@ -1,5 +1,8 @@
 package com.leaguetracker.app.controller;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,21 +32,44 @@ public class MatchesController {
 
     @GetMapping("/{matchId}/regions/{region}")
     public ResponseEntity<RiotMatchResponse> getMatch(
-            @NonNull @PathVariable String matchId,
-            @NonNull @PathVariable String region) {
+            @PathVariable
+            @NotBlank(message = "matchId is required")
+            @Size(max = 78, message = "matchId too long")
+            @Pattern(regexp = "[a-zA-Z0-9_-]+") String matchId,
+            @PathVariable
+            @NotBlank(message = "region is required")
+            @Size(max = 20, message = "region too long")
+            @Pattern(regexp = "[a-zA-Z]+") String region) {
         return ResponseEntity.ok(matchService.getMatch(matchId, region));
     }
 
     @GetMapping("/{matchId}/ranks")
-    public ResponseEntity<List<MatchDetails>> getSummonersRanks(@NonNull @PathVariable String matchId) {
+    public ResponseEntity<List<MatchDetails>> getSummonersRanks(
+            @PathVariable
+            @NotBlank(message = "matchId is required")
+            @Size(max = 78, message = "matchId too long")
+            @Pattern(regexp = "[a-zA-Z0-9_-]+", message = "matchId contains invalid characters")
+            String matchId) {
         return ResponseEntity.ok(matchService.getSummonersRanks(matchId));
     }
 
     @GetMapping("/matchlist")
     public ResponseEntity<List<String>> updateMatchList(
-            @NonNull @RequestParam String puuid,
-            @NonNull @RequestParam String region,
-            @NonNull @RequestParam MatchListMode mode) {
+            @RequestParam
+            @NotBlank(message = "puuid is required")
+            @Size(max = 78, message = "puuid too long")
+            @Pattern(regexp = "[a-zA-Z0-9_-]+", message = "puuid contains invalid characters")
+            String puuid,
+
+            @RequestParam
+            @NotBlank(message = "region is required")
+            @Size(max = 20, message = "region too long")
+            @Pattern(regexp = "[a-zA-Z]+", message = "region contains invalid characters")
+            String region,
+
+            @RequestParam
+            @NonNull
+            MatchListMode mode) {
         return ResponseEntity.ok(matchService.updateMatchList(puuid, region, mode));
     }
 }

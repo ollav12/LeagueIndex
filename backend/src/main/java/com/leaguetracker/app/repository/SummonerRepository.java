@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.leaguetracker.app.model.Summoner;
 
 @Repository
-public interface SummonerRepository extends JpaRepository<Summoner, String>{
-
+public interface SummonerRepository extends JpaRepository<Summoner, String> {
 }

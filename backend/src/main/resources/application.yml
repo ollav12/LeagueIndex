@@ -7,6 +7,13 @@ spring:
   profiles:
     active: dev  # default, can be overridden
 
+server:
+  port: 8080
+  tomcat:
+    max-swallow-size: 1B
+    max-http-form-post-size: 1MB
+    max-http-request-header-size: 16KB
+
 management:
   endpoints:
     web:
