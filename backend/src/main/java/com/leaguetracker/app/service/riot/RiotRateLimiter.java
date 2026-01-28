@@ -1,45 +1,60 @@
 package com.leaguetracker.app.service.riot;
 
-import io.github.bucket4j.Bandwidth;
-import io.github.bucket4j.Bucket;
-import io.github.bucket4j.Refill;
-import io.github.bucket4j.local.LocalBucket;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 @Service
 public class RiotRateLimiter {
 
-    // Riot Games dev key limits: 20 requests per 1 second, 100 requests per 2 minutes
-    private static final Bandwidth SHORT_TERM = Bandwidth.classic(20, Refill.intervally(20, Duration.ofSeconds(1)));
-    private static final Bandwidth LONG_TERM = Bandwidth.classic(100, Refill.intervally(100, Duration.ofMinutes(2)));
+    private final RedisTemplate<String, Integer> redisTemplate;
 
-    // 12 buckets → safely under both limits even with bursty parallel calls
-    private final List<LocalBucket> buckets = IntStream.range(0, 12)
-            .mapToObj(i -> Bucket.builder()
-                    .addLimit(SHORT_TERM)
-                    .addLimit(LONG_TERM)
-                    .build())
-            .toList();
+    private static final int SHORT_TERM_LIMIT = 20;
+    private static final int LONG_TERM_LIMIT = 100;
 
-    private final AtomicInteger counter = new AtomicInteger(0);
+    private static final Duration SHORT_TERM_WINDOW = Duration.ofSeconds(1);
+    private static final Duration LONG_TERM_WINDOW = Duration.ofMinutes(2);
 
-    /**
-     * Blocks the current thread until a token is available (recommended for Riot API)
-     */
-    public void acquire() {
-        int index = counter.getAndIncrement() % buckets.size();
-        Bucket bucket = buckets.get(Math.abs(index)); // Math.abs for negative overflow safety (very rare)
+    private final String apiKey = "riot-api-key";
 
-        // This will block if rate limit is exceeded
-        try {
-            bucket.asBlocking().consume(1);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+    public RiotRateLimiter(RedisTemplate<String, Integer> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
+    public synchronized void acquire() {
+        ValueOperations<String, Integer> ops = redisTemplate.opsForValue();
+
+        String shortTermKey = "riot_rate:short:" + apiKey;
+        String longTermKey = "riot_rate:long:" + apiKey;
+
+        while (true) {
+            Integer shortCount = ops.get(shortTermKey);
+            Integer longCount = ops.get(longTermKey);
+
+            shortCount = (shortCount == null) ? 0 : shortCount;
+            longCount = (longCount == null) ? 0 : longCount;
+
+            if (shortCount < SHORT_TERM_LIMIT && longCount < LONG_TERM_LIMIT) {
+                // Increment counters and set TTL if first hit
+                ops.increment(shortTermKey);
+                ops.increment(longTermKey);
+
+                if (shortCount == 0) {
+                    redisTemplate.expire(shortTermKey, SHORT_TERM_WINDOW);
+                }
+                if (longCount == 0) {
+                    redisTemplate.expire(longTermKey, LONG_TERM_WINDOW);
+                }
+                return; // Allowed
+            }
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
