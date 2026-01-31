@@ -5,7 +5,6 @@ import com.leaguetracker.app.dto.response.RiotMatchResponse;
 import com.leaguetracker.app.dto.response.RiotMatchResponse.InfoDto;
 import com.leaguetracker.app.dto.response.RiotMatchResponse.MetadataDto;
 import com.leaguetracker.app.model.MatchDetails;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

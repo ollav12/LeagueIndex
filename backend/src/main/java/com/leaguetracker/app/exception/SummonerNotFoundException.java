@@ -9,4 +9,3 @@ public class SummonerNotFoundException extends RuntimeException {
         super(message, cause);
     }
 }
-

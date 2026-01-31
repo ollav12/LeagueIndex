@@ -1,14 +1,12 @@
 package com.leaguetracker.app.mapper;
 
-import com.leaguetracker.app.dto.response.RiotLeagueResponse.RiotLeagueEntry;
 import com.leaguetracker.app.dto.response.RiotLeagueResponse;
+import com.leaguetracker.app.dto.response.RiotLeagueResponse.RiotLeagueEntry;
 import com.leaguetracker.app.model.Rank;
-
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-
 import java.util.List;
 import java.util.Objects;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface RiotLeagueMapper {
@@ -42,7 +40,6 @@ public interface RiotLeagueMapper {
                 .queueType(rank.queueType())
                 .build();
     }
-
     ;
 
     default List<Rank> toRanks(RiotLeagueResponse ranks) {

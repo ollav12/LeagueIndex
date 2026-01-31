@@ -1,19 +1,15 @@
 package com.leaguetracker.app.service;
 
-import com.leaguetracker.app.model.Rank;
-import com.leaguetracker.app.repository.RankRepository;
-import com.leaguetracker.app.service.riot.RiotService;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 import com.leaguetracker.app.dto.response.RiotLeagueResponse;
 import com.leaguetracker.app.dto.response.RiotLeagueResponse.RiotLeagueEntry;
 import com.leaguetracker.app.mapper.RiotLeagueMapper;
+import com.leaguetracker.app.model.Rank;
+import com.leaguetracker.app.repository.RankRepository;
+import com.leaguetracker.app.service.riot.RiotService;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service

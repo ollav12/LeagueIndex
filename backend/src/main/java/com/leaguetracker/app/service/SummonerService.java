@@ -2,16 +2,14 @@ package com.leaguetracker.app.service;
 
 import com.leaguetracker.app.dto.request.SummonerLookupRequest;
 import com.leaguetracker.app.dto.response.RiotAccountResponse;
-import org.springframework.stereotype.Service;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 import com.leaguetracker.app.dto.response.RiotSummonerResponse;
 import com.leaguetracker.app.mapper.RiotSummonerMapper;
 import com.leaguetracker.app.model.Summoner;
 import com.leaguetracker.app.repository.SummonerRepository;
 import com.leaguetracker.app.service.riot.RiotService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -66,7 +64,8 @@ public class SummonerService {
 
     @Transactional
     public Summoner saveSummoner(RiotSummonerResponse riotSummoner) {
-        Summoner existingSummoner = summonerRepository.findById(riotSummoner.puuid()).orElse(null);
+        Summoner existingSummoner =
+                summonerRepository.findById(riotSummoner.puuid()).orElse(null);
         existingSummoner.setLastModifiedDate(null);
         Summoner newSummoner = RiotSummonerMapper.INSTANCE.map(existingSummoner, riotSummoner);
         log.info("Saving summoner to database: {}", newSummoner);

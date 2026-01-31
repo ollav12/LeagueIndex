@@ -1,17 +1,15 @@
 package com.leaguetracker.app.mapper;
 
 import com.leaguetracker.app.dto.response.RiotAccountResponse;
-import com.leaguetracker.app.dto.response.RiotLeagueResponse;
 import com.leaguetracker.app.dto.response.RiotSummonerResponse;
 import com.leaguetracker.app.dto.response.SummonerLookupResponse;
 import com.leaguetracker.app.model.Rank;
 import com.leaguetracker.app.model.Summoner;
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 @Mapper
 public interface RiotSummonerMapper {
@@ -21,9 +19,7 @@ public interface RiotSummonerMapper {
     @Mapping(target = "puuid", source = "account.puuid")
     @Mapping(target = "ranked", source = "ranks")
     SummonerLookupResponse toSummonerLookupResponse(
-            RiotAccountResponse account,
-            RiotSummonerResponse response,
-            List<Rank> ranks);
+            RiotAccountResponse account, RiotSummonerResponse response, List<Rank> ranks);
 
     RiotSummonerResponse toRiotSummonerResponse(Summoner summoner);
 
@@ -37,6 +33,6 @@ public interface RiotSummonerMapper {
     @Mapping(target = "tagLine", ignore = true)
     @Mapping(target = "region", ignore = true)
     @Mapping(target = "lastModifiedDate", ignore = true)
-        // Managed by JPA
+    // Managed by JPA
     Summoner map(@MappingTarget Summoner existingSummoner, RiotSummonerResponse riotSummoner);
 }

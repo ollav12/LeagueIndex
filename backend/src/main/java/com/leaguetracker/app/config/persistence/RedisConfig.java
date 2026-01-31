@@ -1,6 +1,8 @@
 package com.leaguetracker.app.config.persistence;
 
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -13,9 +15,6 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.cache.annotation.EnableCaching;
-
-import java.time.Duration;
 
 @Configuration
 @EnableCaching
@@ -58,8 +57,8 @@ public class RedisConfig {
                 .entryTtl(Duration.ofHours(24)) // Set expiration time for cache entries
                 .serializeKeysWith(
                         RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair
-                        .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
+                        new GenericJackson2JsonRedisSerializer()));
 
         // Build and return the RedisCacheManager
         return RedisCacheManager.builder(connectionFactory)

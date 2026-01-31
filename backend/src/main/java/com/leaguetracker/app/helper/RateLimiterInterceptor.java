@@ -17,7 +17,8 @@ public class RateLimiterInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
         String ip = request.getRemoteAddr();
         if (!rateLimiterService.isAllowed(ip)) {
             response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());

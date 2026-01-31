@@ -4,7 +4,4 @@ import lombok.Builder;
 
 @Builder
 public record SummonerUpdateResponse(
-        SummonerLookupResponse summonerLookupResponse,
-        SummonerMatchesResponse summonerMatchesResponse
-) {
-}
+        SummonerLookupResponse summonerLookupResponse, SummonerMatchesResponse summonerMatchesResponse) {}

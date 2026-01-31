@@ -19,8 +19,7 @@ public class ProdWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(rateLimiterInterceptor)
-                .addPathPatterns("/**");
+        registry.addInterceptor(rateLimiterInterceptor).addPathPatterns("/**");
     }
 
     @Override
@@ -29,7 +28,7 @@ public class ProdWebConfig implements WebMvcConfigurer {
                 .allowedOrigins("https://leagueindex.dev")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("Authorization", "Content-Type")
-                .allowCredentials(true);
+                .allowCredentials(true)
+                .maxAge(600);
     }
-
 }

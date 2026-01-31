@@ -17,9 +17,7 @@ class RiotRateLimiterIntegrationTest {
 
     @SuppressWarnings("resource")
     @Container
-    static GenericContainer<?> redis =
-            new GenericContainer<>("redis:alpine")
-                    .withExposedPorts(6379);
+    static GenericContainer<?> redis = new GenericContainer<>("redis:alpine").withExposedPorts(6379);
 
     @DynamicPropertySource
     static void redisProps(DynamicPropertyRegistry registry) {

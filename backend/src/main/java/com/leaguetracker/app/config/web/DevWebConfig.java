@@ -19,8 +19,7 @@ public class DevWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(rateLimiterInterceptor)
-                .addPathPatterns("/**");
+        registry.addInterceptor(rateLimiterInterceptor).addPathPatterns("/**");
     }
 
     @Override
@@ -29,7 +28,7 @@ public class DevWebConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowCredentials(true)
+                .maxAge(600);
     }
-
 }

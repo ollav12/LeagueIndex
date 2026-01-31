@@ -8,12 +8,11 @@ import com.leaguetracker.app.exception.SummonerRecentlyUpdatedException;
 import com.leaguetracker.app.mapper.RiotSummonerMapper;
 import com.leaguetracker.app.model.Rank;
 import com.leaguetracker.app.model.Summoner;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -25,40 +24,22 @@ public class SummonerInfoService {
     private final RankService rankService;
     private final StatsService statsService;
 
-
     public SummonerLookupResponse getSummonerDetails(SummonerLookupRequest request) {
-        RiotAccountResponse account = accountService.getAccount(
-                request.region(),
-                request.summonerName(),
-                request.tag());
-        RiotSummonerResponse summoner = summonerService.getSummoner(
-                account,
-                request);
-        List<Rank> league = rankService.getRanked(
-                summoner.puuid(),
-                request.region());
+        RiotAccountResponse account =
+                accountService.getAccount(request.region(), request.summonerName(), request.tag());
+        RiotSummonerResponse summoner = summonerService.getSummoner(account, request);
+        List<Rank> league = rankService.getRanked(summoner.puuid(), request.region());
 
         // Fetch first 100 matches
-        matchService.updateMatchList(
-                account.puuid(),
-                request.region(),
-                MatchService.MatchListMode.FIRST_LOAD);
+        matchService.updateMatchList(account.puuid(), request.region(), MatchService.MatchListMode.FIRST_LOAD);
 
-        return RiotSummonerMapper.INSTANCE.toSummonerLookupResponse(
-                account,
-                summoner,
-                league);
+        return RiotSummonerMapper.INSTANCE.toSummonerLookupResponse(account, summoner, league);
     }
 
     public SummonerMatchesResponse getMatchHistory(SummonerMatchesRequest request) {
 
-        List<String> matchIds = matchService.getNextMatchIds(
-                request.puuid(),
-                request.lastMatchId(),
-                request.limit());
-        List<RiotMatchResponse> matchDetails = matchService.getMatches(
-                request.region(),
-                matchIds);
+        List<String> matchIds = matchService.getNextMatchIds(request.puuid(), request.lastMatchId(), request.limit());
+        List<RiotMatchResponse> matchDetails = matchService.getMatches(request.region(), matchIds);
         Map<String, Object> stats = statsService.getSummonerStats(request.puuid());
 
         return SummonerMatchesResponse.builder()
@@ -69,25 +50,14 @@ public class SummonerInfoService {
     }
 
     public SummonerMatchesResponse loadMoreMatches(SummonerMatchesRequest request) {
-        List<String> matchIds = matchService.getNextMatchIds(
-                request.puuid(),
-                request.lastMatchId(),
-                request.limit());
+        List<String> matchIds = matchService.getNextMatchIds(request.puuid(), request.lastMatchId(), request.limit());
 
         if (matchIds.isEmpty()) {
-            matchService.updateMatchList(
-                    request.puuid(),
-                    request.region(),
-                    MatchService.MatchListMode.LIGHT);
-            matchIds = matchService.getNextMatchIds(
-                    request.puuid(),
-                    request.lastMatchId(),
-                    request.limit());
+            matchService.updateMatchList(request.puuid(), request.region(), MatchService.MatchListMode.LIGHT);
+            matchIds = matchService.getNextMatchIds(request.puuid(), request.lastMatchId(), request.limit());
         }
 
-        List<RiotMatchResponse> matchDetails = matchService.getMatches(
-                request.region(),
-                matchIds);
+        List<RiotMatchResponse> matchDetails = matchService.getMatches(request.region(), matchIds);
         Map<String, Object> stats = statsService.getSummonerStats(request.puuid());
 
         return SummonerMatchesResponse.builder()
@@ -103,9 +73,9 @@ public class SummonerInfoService {
         LocalDateTime threshold = LocalDateTime.now().minusMinutes(10);
 
         if (!lastModified.isBefore(threshold)) {
-            throw new SummonerRecentlyUpdatedException(
-                    "Summoner with puuid " + request.puuid() + " was updated recently. Please wait before trying again."
-            );
+            throw new SummonerRecentlyUpdatedException("Summoner with puuid "
+                    + request.puuid()
+                    + " was updated recently. Please wait before trying again.");
         }
         RiotAccountResponse account = RiotAccountResponse.builder()
                 .gameName(request.summonerName())
@@ -113,31 +83,16 @@ public class SummonerInfoService {
                 .tagLine(request.tag())
                 .build();
 
-        RiotSummonerResponse summoner = summonerService.updateSummoner(
-                request.puuid(),
-                request.region());
-        List<Rank> league = rankService.updateRanked(
-                summoner.puuid(),
-                request.region());
+        RiotSummonerResponse summoner = summonerService.updateSummoner(request.puuid(), request.region());
+        List<Rank> league = rankService.updateRanked(summoner.puuid(), request.region());
 
         // Fetch first 100 matches
-        matchService.updateMatchList(
-                account.puuid(),
-                request.region(),
-                MatchService.MatchListMode.LIGHT);
+        matchService.updateMatchList(account.puuid(), request.region(), MatchService.MatchListMode.LIGHT);
 
-        SummonerLookupResponse lookup = RiotSummonerMapper.INSTANCE.toSummonerLookupResponse(
-                account,
-                summoner,
-                league);
+        SummonerLookupResponse lookup = RiotSummonerMapper.INSTANCE.toSummonerLookupResponse(account, summoner, league);
 
-        List<String> matchIds = matchService.getNextMatchIds(
-                request.puuid(),
-                request.lastMatchId(),
-                request.limit());
-        List<RiotMatchResponse> matchDetails = matchService.getMatches(
-                request.region(),
-                matchIds);
+        List<String> matchIds = matchService.getNextMatchIds(request.puuid(), request.lastMatchId(), request.limit());
+        List<RiotMatchResponse> matchDetails = matchService.getMatches(request.region(), matchIds);
         Map<String, Object> stats = statsService.getSummonerStats(request.puuid());
 
         SummonerMatchesResponse matchHistory = SummonerMatchesResponse.builder()

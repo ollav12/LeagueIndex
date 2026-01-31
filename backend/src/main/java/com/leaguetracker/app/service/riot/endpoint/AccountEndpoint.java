@@ -1,14 +1,13 @@
 package com.leaguetracker.app.service.riot.endpoint;
 
-import com.leaguetracker.app.service.riot.RiotRateLimiter;
-import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leaguetracker.app.config.web.HttpClientConfig;
 import com.leaguetracker.app.dto.response.RiotAccountResponse;
 import com.leaguetracker.app.helper.Helper;
+import com.leaguetracker.app.service.riot.RiotRateLimiter;
 import com.leaguetracker.app.service.riot.RiotRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -35,8 +34,7 @@ public class AccountEndpoint {
                 restTemplate,
                 rateLimiter,
                 summonerName,
-                tag
-        );
+                tag);
         return request.execute();
     }
 
@@ -49,8 +47,7 @@ public class AccountEndpoint {
                 httpClientConfig,
                 restTemplate,
                 rateLimiter,
-                puuid
-        );
+                puuid);
         return request.execute();
     }
 }

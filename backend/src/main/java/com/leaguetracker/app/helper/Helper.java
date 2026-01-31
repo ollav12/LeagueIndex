@@ -4,8 +4,7 @@ import lombok.Getter;
 
 public class Helper {
 
-    public Helper() {
-    }
+    public Helper() {}
 
     @Getter
     public enum LeagueRegion {
@@ -55,7 +54,6 @@ public class Helper {
         RiotRegion(String regionName) {
             this.regionName = regionName;
         }
-
     }
 
     /**

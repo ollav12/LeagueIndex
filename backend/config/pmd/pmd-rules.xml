@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="SpringBootPMDRules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+                             http://pmd.sourceforge.net/ruleset_2_0_0.xsd"
+         xmlns:pmd="http://pmd.sourceforge.net/ruleset/2.0.0">
+
+    <description>
+        PMD rules for Spring Boot project
+    </description>
+
+    <!-- Basic Code rules -->
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateField"/>
+    <rule ref="category/java/bestpractices.xml/AvoidDuplicateLiterals"/>
+    <rule ref="category/java/codestyle.xml/VariableNamingConventions"/>
+    <rule ref="category/java/design.xml/UseUtilityClass"/>
+    <rule ref="category/java/errorprone.xml/NullAssignment"/>
+    <rule ref="category/java/errorprone.xml/NullDereference"/>
+    <rule ref="category/java/errorprone.xml/UseEqualsToCompareStrings"/>
+    <rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition"/>
+
+    <!-- Performance / Readability -->
+    <rule ref="category/java/performance.xml/AvoidReassigningParameters"/>
+    <rule ref="category/java/design.xml/AvoidStaticImport"/>
+
+    <!-- Spring / General best practices -->
+    <rule ref="category/java/design.xml/AvoidUsingHardCodedIP"/>
+</ruleset>

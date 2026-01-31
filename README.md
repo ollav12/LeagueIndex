@@ -84,6 +84,12 @@ This repo is a monolithic repository containing both backend and frontend code.
 - Backend follows a layered architecture
 - Frontend follows a component based architecture
 
+## Formatting & Linting
+
+   ```Spotless
+   ./gradlew.bat spotlessApply
+   ```
+
 ## Features and TODOs
 
 - [x] 🧠 Rest API - Spring Boot
@@ -96,6 +102,8 @@ This repo is a monolithic repository containing both backend and frontend code.
 - [x] 🥷 API documentation - Swagger / OpenAPI
 - [x] 📝 Logging - Slf4j, Logback
 - [x] 🌍 Rate limiting - Rate limiting by IP using redis
+- [x] 🧹 Linting & Formatting - Code style/format rules (Spotless, Checkstyle, PMD,
+  SpotBugs)
 - [ ] 🌍 Load Balancer -
 - [ ] ☸️ Deployment - Kubernetes
 - [ ] 🔐 Authentication & authorization -

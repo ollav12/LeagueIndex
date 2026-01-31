@@ -1,24 +1,20 @@
 package com.leaguetracker.app.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.leaguetracker.app.model.MatchDetails;
-import org.springframework.stereotype.Service;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leaguetracker.app.dto.response.RiotMatchListResponse;
 import com.leaguetracker.app.dto.response.RiotMatchResponse;
 import com.leaguetracker.app.mapper.RiotMatchMapper;
 import com.leaguetracker.app.model.Match;
-import com.leaguetracker.app.repository.MatchRepository;
+import com.leaguetracker.app.model.MatchDetails;
 import com.leaguetracker.app.repository.MatchDetailsRepository;
+import com.leaguetracker.app.repository.MatchRepository;
 import com.leaguetracker.app.service.riot.RiotService;
-
+import java.util.ArrayList;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
@@ -54,8 +50,7 @@ public class MatchService {
             if (lastMatchId != null) {
                 System.out.println(
                         "Fetching matches for puuid: " + puuid + ", lastMatchId: " + lastMatchId + ", limit: " + limit);
-                List<String> matchIds = matchRepository.getNextMatchIds(puuid, lastMatchId,
-                        PageRequest.of(0, limit));
+                List<String> matchIds = matchRepository.getNextMatchIds(puuid, lastMatchId, PageRequest.of(0, limit));
                 System.out.println("Found " + matchIds.size() + " matches after lastMatchId: " + lastMatchId);
                 return matchIds;
             } else {
@@ -94,9 +89,7 @@ public class MatchService {
         return getMatches(region, matchIds);
     }
 
-    /**
-     * Helper method to fetch match from API and save to database
-     */
+    /** Helper method to fetch match from API and save to database */
     private void fetchAndSaveMatch(String matchId, String region, List<RiotMatchResponse> matches) {
         try {
             RiotMatchResponse matchDto = riotService.Match.findByMatchId(matchId, region);
@@ -129,10 +122,7 @@ public class MatchService {
     public void saveMatchList(List<String> matchIds, String puuid) {
         matchIds.stream()
                 .filter(matchId -> matchRepository.findByMatchIdAndPuuid(matchId, puuid) == null)
-                .map(matchId -> Match.builder()
-                        .matchId(matchId)
-                        .puuid(puuid)
-                        .build())
+                .map(matchId -> Match.builder().matchId(matchId).puuid(puuid).build())
                 .forEach(matchRepository::save);
     }
 
@@ -144,7 +134,8 @@ public class MatchService {
         List<Match> matchListTemp = matchRepository.findByPuuid(puuid);
         List<String> matchList = new ArrayList<String>();
 
-        if (!matchListTemp.isEmpty() && mode == MatchListMode.FIRST_LOAD) { // Don't load new matches if summoner matches are already present
+        if (!matchListTemp.isEmpty()
+                && mode == MatchListMode.FIRST_LOAD) { // Don't load new matches if summoner matches are already present
             System.out.println("Match list already exists for puuid: " + puuid + ", skipping first load update.");
             for (Match match : matchListTemp) {
                 matchList.add(match.getMatchId());
@@ -183,12 +174,8 @@ public class MatchService {
 
     public void saveMatches(List<String> matchList, String puuid) {
         for (String match : matchList) {
-            Match newMatch = Match.builder()
-                    .puuid(puuid)
-                    .matchId(match)
-                    .build();
+            Match newMatch = Match.builder().puuid(puuid).matchId(match).build();
             matchRepository.save(newMatch);
         }
     }
-
 }

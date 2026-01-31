@@ -10,10 +10,14 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "match", indexes = {
-        @Index(name = "idx_puuid", columnList = "puuid")}, uniqueConstraints = {
-        @UniqueConstraint(name = "uk_puuid_match", columnNames = {"puuid", "match_id"})
-})
+@Table(
+        name = "match",
+        indexes = {@Index(name = "idx_puuid", columnList = "puuid")},
+        uniqueConstraints = {
+            @UniqueConstraint(
+                    name = "uk_puuid_match",
+                    columnNames = {"puuid", "match_id"})
+        })
 public class Match {
 
     @Id

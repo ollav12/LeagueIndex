@@ -1,11 +1,10 @@
 package com.leaguetracker.app.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.*;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,6 +19,7 @@ public class Summoner {
 
     @Id
     private String puuid;
+
     private String summonerName;
     private String tagLine;
     private String region;

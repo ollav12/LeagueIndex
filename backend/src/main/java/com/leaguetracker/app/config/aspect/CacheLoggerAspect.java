@@ -1,14 +1,13 @@
 package com.leaguetracker.app.config.aspect;
 
 import java.util.Arrays;
-
+import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.aopalliance.intercept.MethodInvocation;
 
 @Aspect
 @Component
@@ -62,8 +61,8 @@ public class CacheLoggerAspect {
 
         System.out.println("\n==================================================");
         System.out.println("CACHE INTERCEPTOR: " + methodName);
-        System.out.println((timeTaken < 5) ? "CACHE HIT (took " + timeTaken + "ms)"
-                : "CACHE MISS (took " + timeTaken + "ms)");
+        System.out.println(
+                (timeTaken < 5) ? "CACHE HIT (took " + timeTaken + "ms)" : "CACHE MISS (took " + timeTaken + "ms)");
         System.out.println("==================================================\n");
 
         return result;

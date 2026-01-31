@@ -4,10 +4,8 @@ import com.leaguetracker.app.service.riot.endpoint.AccountEndpoint;
 import com.leaguetracker.app.service.riot.endpoint.LeagueEndpoint;
 import com.leaguetracker.app.service.riot.endpoint.MatchEndpoint;
 import com.leaguetracker.app.service.riot.endpoint.SummonerEndpoint;
-
-import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

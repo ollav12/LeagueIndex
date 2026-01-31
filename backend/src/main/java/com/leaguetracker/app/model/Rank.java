@@ -10,10 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "rank", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"puuid", "queueType", "season"})
-})
-
+@Table(
+        name = "rank",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"puuid", "queueType", "season"})})
 public class Rank {
 
     @Id
