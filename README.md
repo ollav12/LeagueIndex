@@ -2,7 +2,7 @@
 
 LeagueIndex is a website that can be used to gather insightful data & statistics about a user's league of legends
 account. By accessing the riot games api, we can get tons of useful data, that we can convert into presentable and
-useful data for the end user...
+useful data for the end user..... Test
 
 ![image](https://github.com/user-attachments/assets/edea9259-b927-419b-9473-fe3d17d8a873)
 
